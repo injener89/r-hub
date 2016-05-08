@@ -2480,11 +2480,11 @@ function get_group($arg) {
 }
 function uppercase($str){
 	global $charset;
-    return mb_strtoupper($str, $charset);
+    return $str; //mb_strtoupper($str, $charset);
 }
 function lowercase($str){
 	global $charset;
-    return mb_strtolower($str, $charset);
+    return $str; //mb_strtolower($str, $charset);
 }
 // +--------------------------------------------------
 // | Interface
