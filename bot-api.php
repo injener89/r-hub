@@ -5,11 +5,6 @@
 /**
  * Функция отправки сообщения sendMessage().
  */
-function sendMessage($access_token,$param) {
-  $api = 'https://api.telegram.org/bot' . $access_token;  
-  //return file_get_contents($api . '/'.$param);
-  return send_post($api.'/'.$param['method'],$param['param']);
-} 
 function send_post($url,$data){
     $ch=curl_init();
    // curl_setopt ($ch, CURLOPT_SSL_VERIFYPEER, 0); // отключение сертификата
@@ -24,6 +19,12 @@ function send_post($url,$data){
     curl_close ($ch);
     return $data;
 }
+function sendMessage($access_token,$param) {
+  $api = 'https://api.telegram.org/bot' . $access_token;  
+  //return file_get_contents($api . '/'.$param);
+  return send_post($api.'/'.$param['method'],$param['param']);
+} 
+
 
 if(isset($_GET['respons']) && $_GET['respons'] != "")
 {
@@ -33,6 +34,7 @@ if(isset($_GET['respons']) && $_GET['respons'] != "")
     $url = "http://www.tt.uz/bots/".$_GET['respons'];
     $result = file_get_contents($url);
     $res = json_decode($result);
+    
     if(isset($output['message']['chat']['id'])){
         $param = send_post($res->url,$telegram);
         $telegramResult = sendMessage($res->bot_token,json_decode($param));
