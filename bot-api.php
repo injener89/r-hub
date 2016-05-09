@@ -19,34 +19,15 @@ function send_post($url,$data){
     curl_close ($ch);
     return $data;
 }
-function send_get($url,$data = 0){
-    $ch=curl_init();
-   // curl_setopt ($ch, CURLOPT_SSL_VERIFYPEER, 0); // отключение сертификата
-   // curl_setopt ($ch, CURLOPT_SSL_VERIFYHOST, FALSE); // отключение сертификата
-    curl_setopt ($ch, CURLOPT_URL, $url );
-    curl_setopt ($ch, CURLOPT_HTTPHEADER,array('Content-Type: text/xml'));
-    curl_setopt(
-    $ch,
-    CURLOPT_POSTFIELDS,
-    array(
-      'file' => '@' . 'http://www.tt.uz/images/option4/logo_welcome.jpg'
-    ));
-    curl_setopt ($ch, CURLOPT_RETURNTRANSFER,1);
-   
-    curl_setopt ($ch, CURLOPT_POST, 1);
-    curl_setopt ($ch, CURLOPT_POSTFIELDS, $data );
-    curl_setopt ($ch, CURLOPT_USERAGENT, "Mozilla/4.0 (compatible; MSIE 8.0; Windows NT 6.1; Trident/4.0)");
-    $data=curl_exec ($ch);
-    curl_close ($ch);
-    return $data;
-}
-function executeCurl($action, $data = null, $token)
+function executeCurl($action, array $data = null, $token)
     {
         $ch = curl_init();
         if ($ch === false) {
             exit;
         }
-
+        if(isset($data['photo'])){
+            $data['photo'] = new \CURLFile($data['photo']);
+        }
         $curlConfig = [
             CURLOPT_URL            => 'https://api.telegram.org/bot' .$token. '/' . $action,
             CURLOPT_POST           => true,
@@ -66,11 +47,7 @@ function executeCurl($action, $data = null, $token)
 
 
 function sendMessage($access_token,$param) {
-  //$api = 'https://api.telegram.org/bot' . $access_token;  
-  //return file_get_contents($api . '/'.$param);
-  //return send_get($api.'/'.$param->method.'?'.$param->param);
-    
-    return executeCurl($param->method, $param->param, $access_token);
+    return executeCurl($param->method, (array)$param->param, $access_token);
 } 
 
 
