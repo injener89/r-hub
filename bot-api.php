@@ -7,7 +7,8 @@
  */
 function sendMessage($access_token,$param) {
   $api = 'https://api.telegram.org/bot' . $access_token;  
-  return file_get_contents($api . '/'.$param);
+  //return file_get_contents($api . '/'.$param);
+  return send_post($api.'/'.$param['method'],$param['param']);
 } 
 function send_post($url,$data){
     $ch=curl_init();
@@ -34,11 +35,21 @@ if(isset($_GET['respons']) && $_GET['respons'] != "")
     $res = json_decode($result);
     if(isset($output['message']['chat']['id'])){
         $param = send_post($res->url,$telegram);
-        $telegramResult = sendMessage($res->bot_token,$param);
+        $telegramResult = sendMessage($res->bot_token,json_decode($param));
         if((int)$res->return_telegram_is == 1){
-            send_post($res->return_telegram,$telegramResult);
+            //send_post($res->return_telegram,$telegramResult);
         }
     }   
+    
+    /*
+     * 
+     curl_setopt(
+    $request,
+    CURLOPT_POSTFIELDS,
+    array(
+      'file' => '@' . realpath('example.txt')
+    ));
+     */
 }
 echo "Bad request!";
 exit;
