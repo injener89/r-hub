@@ -36,9 +36,9 @@ function send_post($url,$data = 0){
 
 if(isset($_GET['respons']) && $_GET['respons'] != "")
 {
-
-    $url = "http://www.tt.uz/bots/".$_GET['respons'];
-    $result = send_post($url);
+    $data = $_GET['respons'];
+    $url = "http://www.tt.uz/bots";
+    $result = send_post($url,$data);
 
   var_dump($result);
 }
