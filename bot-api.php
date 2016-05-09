@@ -22,7 +22,7 @@ function send_post($url,$data){
 function sendMessage($access_token,$param) {
   $api = 'https://api.telegram.org/bot' . $access_token;  
   //return file_get_contents($api . '/'.$param);
-  return send_post($api.'/'.$param['method'],$param['param']);
+  return send_post($api.'/'.$param->method,$param->param);
 } 
 
 
