@@ -14,7 +14,7 @@ $update = file_get_contents($url."/sendMessage?chat_id=".$chatId."&text=Maxalchi
 if(isset($_GET['test']))
 {
   // Соединение, выбор базы данных
-    $dbconn = pg_connect("host=tt.uz:5432 dbname=ttuz_www user=ttuz_user password=postgres5665528_")
+    $dbconn = pg_connect("host=box1158.bluehost.com:2083 dbname=ttuz_www user=ttuz_user password=postgres5665528_")
         or die('Could not connect: ' . pg_last_error());
 
     // Выполнение SQL запроса
