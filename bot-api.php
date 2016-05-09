@@ -13,30 +13,7 @@ $update = file_get_contents($url."/sendMessage?chat_id=".$chatId."&text=Maxalchi
  */
 if(isset($_GET['test']))
 {
-  // Соединение, выбор базы данных
-    $dbconn = pg_connect("host=box1158.bluehost.com:2083 dbname=ttuz_www user=ttuz_user password=postgres5665528_")
-        or die('Could not connect: ' . pg_last_error());
 
-    // Выполнение SQL запроса
-    $query = 'SELECT * FROM core_bots';
-    $result = pg_query($query) or die('Ошибка запроса: ' . pg_last_error());
-
-    // Вывод результатов в HTML
-    echo "<table>\n";
-    while ($line = pg_fetch_array($result, null, PGSQL_ASSOC)) {
-        echo "\t<tr>\n";
-        foreach ($line as $col_value) {
-            echo "\t\t<td>$col_value</td>\n";
-        }
-        echo "\t</tr>\n";
-    }
-    echo "</table>\n";
-
-    // Очистка результата
-    pg_free_result($result);
-
-    // Закрытие соединения
-    pg_close($dbconn);
 
 }
 $access_token = '187767986:AAFLK_h8SMMG1mH8cDS64xfE5Lb6LRyo2vU';
