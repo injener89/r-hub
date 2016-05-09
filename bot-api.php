@@ -22,24 +22,40 @@ function send_post($url,$data){
 function executeCurl($action, array $data = null, $token)
     {
     
-        if(isset($data['photo'])){
-                //$data['photo'] = new \CURLFile('/app/ebd77e6ac080c101592beb0a0373dd62.jpg');
+        if(isset($data['photo']) && $action == 'sendPhoto'){
                 copy($data['photo'],$data['p_name']);
                 $data['photo'] = new \CURLFile($data['p_name']);
                 unset($data['p_name']);
             }
-        if(isset($data['audio'])){
-                //$data['photo'] = new \CURLFile('/app/ebd77e6ac080c101592beb0a0373dd62.jpg');
+        if(isset($data['audio']) && $action == 'sendAudio'){
                 copy($data['audio'],$data['p_name']);
                 $data['audio'] = new \CURLFile($data['p_name']);
                 unset($data['p_name']);
-            }    
+            }  
+        if(isset($data['video']) && $action == 'sendVideo'){
+                copy($data['video'],$data['p_name']);
+                $data['video'] = new \CURLFile($data['p_name']);
+                unset($data['p_name']);
+            }     
+        if(isset($data['document']) && $action == 'sendDocument'){
+                copy($data['document'],$data['p_name']);
+                $data['document'] = new \CURLFile($data['p_name']);
+                unset($data['p_name']);
+            } 
+        if(isset($data['sticker']) && $action == 'sendSticker'){
+                copy($data['sticker'],$data['p_name']);
+                $data['sticker'] = new \CURLFile($data['p_name']);
+                unset($data['p_name']);
+            }
+        if(isset($data['voice']) && $action == 'sendVoice'){
+                copy($data['voice'],$data['p_name']);
+                $data['voice'] = new \CURLFile($data['p_name']);
+                unset($data['p_name']);
+            }      
         $ch = curl_init();
         if ($ch === false) {
             exit;
         }
-        
-        
         $curlConfig = [
             CURLOPT_URL            => 'https://api.telegram.org/bot' .$token. '/' . $action,
             CURLOPT_POST           => true,
@@ -78,19 +94,10 @@ if(isset($_GET['respons']) && $_GET['respons'] != "")
                           
         $telegramResult = sendMessage($res->bot_token,json_decode($param));
         if((int)$res->return_telegram_is == 1){
-            //send_post($res->return_telegram,$telegramResult);
+            send_post($res->return_telegram,$telegramResult);
         }
     }   
-    
-    /*
-     * 
-     curl_setopt(
-    $request,
-    CURLOPT_POSTFIELDS,
-    array(
-      'file' => '@' . realpath('example.txt')
-    ));
-     */
+   
 }
 echo "Bad request!";
 exit;
