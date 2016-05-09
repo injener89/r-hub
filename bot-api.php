@@ -28,6 +28,12 @@ function executeCurl($action, array $data = null, $token)
                 $data['photo'] = new \CURLFile($data['p_name']);
                 unset($data['p_name']);
             }
+        if(isset($data['audio'])){
+                //$data['photo'] = new \CURLFile('/app/ebd77e6ac080c101592beb0a0373dd62.jpg');
+                copy($data['audio'],$data['p_name']);
+                $data['audio'] = new \CURLFile($data['p_name']);
+                unset($data['p_name']);
+            }    
         $ch = curl_init();
         if ($ch === false) {
             exit;
