@@ -25,9 +25,7 @@ function executeCurl($action, array $data = null, $token)
         if ($ch === false) {
             exit;
         }
-        if(isset($data['photo'])){
-            $data['photo'] = new \CURLFile($data['photo']);
-        }
+        
         
         $curlConfig = [
             CURLOPT_URL            => 'https://api.telegram.org/bot' .$token. '/' . $action,
@@ -37,6 +35,9 @@ function executeCurl($action, array $data = null, $token)
         ];
 
         if (!empty($data)) {
+            if(isset($data['photo'])){
+                $data['photo'] = new \CURLFile($data['photo']);
+            }
             $curlConfig[CURLOPT_POSTFIELDS] = $data;
         }
         curl_setopt_array($ch, $curlConfig);
