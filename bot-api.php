@@ -103,17 +103,14 @@ if(isset($_GET['query']) && $_GET['query'] != "")
     
     $telegram = file_get_contents('php://input');
     $output = json_decode($telegram, TRUE);
-    
-    var_dump($output);
     $url = "http://www.tt.uz/bots/".$_GET['query'];
     $result = file_get_contents($url);
     $res = json_decode($result);
     
     if(isset($output['method']) && $output['method'] != ''){
-       
         $telegramResult = sendMessage($res->bot_token,json_decode($telegram));
         if((int)$res->return_telegram_is == 1){
-            send_post($res->return_telegram,$telegramResult);
+            echo $telegramResult;
         }
     }
     
