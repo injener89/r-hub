@@ -23,7 +23,8 @@ function executeCurl($action, array $data = null, $token)
     {
     
         if(isset($data['photo'])){
-                $data['photo'] = new \CURLFile($data['photo']);
+                $data['photo'] = new CURLFile($data['photo'],'image/jpeg','test_name');
+                //$data['photo'] = new \CURLFile($data['photo']);
             }
         $ch = curl_init();
         if ($ch === false) {
