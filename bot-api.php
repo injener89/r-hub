@@ -24,7 +24,7 @@ function executeCurl($action, array $data = null, $token)
     
         if(isset($data['photo'])){
                 //$data['photo'] = new \CURLFile('/app/ebd77e6ac080c101592beb0a0373dd62.jpg');
-                $data['photo'] = new \CURLFile(file_get_contents($data['photo']));
+                $data['photo'] = new \CURLFile(file_put_contents($data['photo']));
             }
         $ch = curl_init();
         if ($ch === false) {
