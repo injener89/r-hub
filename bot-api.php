@@ -40,10 +40,37 @@ function send_get($url,$data = 0){
     curl_close ($ch);
     return $data;
 }
+function executeCurl($action, $data = null, $token)
+    {
+        $ch = curl_init();
+        if ($ch === false) {
+            exit;
+        }
+
+        $curlConfig = [
+            CURLOPT_URL            => 'https://api.telegram.org/bot' .$token. '/' . $action,
+            CURLOPT_POST           => true,
+            CURLOPT_RETURNTRANSFER => true,
+            CURLOPT_SAFE_UPLOAD    => true,
+        ];
+
+        if (!empty($data)) {
+            $curlConfig[CURLOPT_POSTFIELDS] = $data;
+        }
+        curl_setopt_array($ch, $curlConfig);
+        $result = curl_exec($ch);
+        curl_close($ch);
+        return $result;
+    }
+
+
+
 function sendMessage($access_token,$param) {
-  $api = 'https://api.telegram.org/bot' . $access_token;  
+  //$api = 'https://api.telegram.org/bot' . $access_token;  
   //return file_get_contents($api . '/'.$param);
-  return send_get($api.'/'.$param->method.'?'.$param->param);
+  //return send_get($api.'/'.$param->method.'?'.$param->param);
+    
+    return executeCurl($param->method, $param->param, $access_token);
 } 
 
 
@@ -58,6 +85,7 @@ if(isset($_GET['respons']) && $_GET['respons'] != "")
     
     if(isset($output['message']['chat']['id'])){
         $param = send_post($res->url,$telegram);
+                          
         $telegramResult = sendMessage($res->bot_token,json_decode($param));
         if((int)$res->return_telegram_is == 1){
             //send_post($res->return_telegram,$telegramResult);
