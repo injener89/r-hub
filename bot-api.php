@@ -1,13 +1,4 @@
 <?php
-/*$API_KEY = '187767986:AAFLK_h8SMMG1mH8cDS64xfE5Lb6LRyo2vU';
-$url = 'https://api.telegram.org/bot'.$API_KEY;
-$update = file_get_contents($url."/getupdates");
-$updateArray = json_decode($update,TRUE);
-
-$chatId = $updateArray["result"][0]["message"]["chat"]["id"];
-
-$update = file_get_contents($url."/sendMessage?chat_id=".$chatId."&text=Maxalchik");
-*/
 /**
  * Telegram Bot access token и URL.
  */
@@ -18,7 +9,7 @@ function sendMessage($access_token,$param) {
   $api = 'https://api.telegram.org/bot' . $access_token;  
   file_get_contents($api . '/'.$param);
 } 
-function send_post($url,$data = 0){
+function send_post($url,$data){
     $ch=curl_init();
    // curl_setopt ($ch, CURLOPT_SSL_VERIFYPEER, 0); // отключение сертификата
    // curl_setopt ($ch, CURLOPT_SSL_VERIFYHOST, FALSE); // отключение сертификата
@@ -33,18 +24,21 @@ function send_post($url,$data = 0){
     return $data;
 }
 
-
 if(isset($_GET['respons']) && $_GET['respons'] != "")
 {
     $url = "http://www.tt.uz/bots/".$_GET['respons'];
     $result = file_get_contents($url);
-
-//bots_my
-  var_dump(json_decode($result));
+    $res = json_decode($result);
+    
+    $telegram = file_get_contents('php://input');
+    $output = json_decode($telegram, TRUE);
+    if(isset($output['message']['chat']['id'])){
+        $param = send_post($res->url,$telegram);
+        sendMessage($res->bot_token,$param);
+    }   
 }
 
-
-
+exit;
 $rrr = file_get_contents('php://input');
 $output = json_decode(file_get_contents('php://input'), TRUE);
 if(isset($output['message']['chat']['id'])){
@@ -53,10 +47,6 @@ if(isset($output['message']['chat']['id'])){
     $ww = send_post('http://www.tt.uz/bot_file.php',$rrr);
     sendMessage($ww);
 } 
-
-
-exit;
-
 
 
 
