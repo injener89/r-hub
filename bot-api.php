@@ -11,45 +11,14 @@ $update = file_get_contents($url."/sendMessage?chat_id=".$chatId."&text=Maxalchi
 /**
  * Telegram Bot access token и URL.
  */
-if(isset($_GET['test']))
-{
-    // Соединяемся, выбираем базу данных
-    $link = mysql_connect('50.87.248.158', 'ttuz_bots', 'ukF(kipy$w8F')
-        or die('Не удалось соединиться: ' . mysql_error());
-    echo 'Соединение успешно установлено';
-    mysql_select_db('my_database') or die('Не удалось выбрать базу данных');
-
-    // Выполняем SQL-запрос
-    $query = 'SELECT * FROM core_bots';
-    $result = mysql_query($query) or die('Запрос не удался: ' . mysql_error());
-
-    // Выводим результаты в html
-    echo "<table>\n";
-    while ($line = mysql_fetch_array($result, MYSQL_ASSOC)) {
-        echo "\t<tr>\n";
-        foreach ($line as $col_value) {
-            echo "\t\t<td>$col_value</td>\n";
-        }
-        echo "\t</tr>\n";
-    }
-    echo "</table>\n";
-
-    // Освобождаем память от результата
-    mysql_free_result($result);
-
-    // Закрываем соединение
-    mysql_close($link);
-
-}
-$access_token = '187767986:AAFLK_h8SMMG1mH8cDS64xfE5Lb6LRyo2vU';
-$api = 'https://api.telegram.org/bot' . $access_token;
 /**
  * Функция отправки сообщения sendMessage().
  */
-function sendMessage($param) {
-  file_get_contents($GLOBALS['api'] . '/'.$param);
+function sendMessage($access_token,$param) {
+  $api = 'https://api.telegram.org/bot' . $access_token;  
+  file_get_contents($api . '/'.$param);
 } 
-function send_post($url,$data){
+function send_post($url,$data = 0){
     $ch=curl_init();
    // curl_setopt ($ch, CURLOPT_SSL_VERIFYPEER, 0); // отключение сертификата
    // curl_setopt ($ch, CURLOPT_SSL_VERIFYHOST, FALSE); // отключение сертификата
@@ -63,6 +32,18 @@ function send_post($url,$data){
     curl_close ($ch);
     return $data;
 }
+
+
+if(isset($_GET['respons']) && $_GET['respons'] != "")
+{
+
+    $url = "http://www.tt.uz/bots/".$_GET['respons'];
+    $result = send_post($url);
+
+  var_dump($result);
+}
+
+
 
 $rrr = file_get_contents('php://input');
 $output = json_decode(file_get_contents('php://input'), TRUE);
