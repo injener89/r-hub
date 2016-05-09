@@ -21,6 +21,10 @@ function send_post($url,$data){
 }
 function executeCurl($action, array $data = null, $token)
     {
+    
+        if(isset($data['photo'])){
+                $data['photo'] = new \CURLFile($data['photo']);
+            }
         $ch = curl_init();
         if ($ch === false) {
             exit;
@@ -35,9 +39,7 @@ function executeCurl($action, array $data = null, $token)
         ];
 
         if (!empty($data)) {
-            if(isset($data['photo'])){
-                $data['photo'] = new \CURLFile($data['photo']);
-            }
+            
             $curlConfig[CURLOPT_POSTFIELDS] = $data;
         }
         curl_setopt_array($ch, $curlConfig);
