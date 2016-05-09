@@ -33,7 +33,7 @@ if(isset($_GET['respons']) && $_GET['respons'] != "")
     
     
     if(isset($output['message']['chat']['id'])){
-        $param = send_post($res->url,$telegram);
+        $param = send_post('"'.$res->url.'"',$telegram);
         sendMessage($res->bot_token,$param);
     }   
 }
@@ -48,20 +48,12 @@ if(isset($output['message']['chat']['id'])){
     sendMessage($ww);
 } 
 
-
-
-
-/**
- * Задаём основные переменные.
- */
 $output = json_decode(file_get_contents('php://input'), TRUE);
 $chat_id = $output['message']['chat']['id'];
 $first_name = $output['message']['chat']['first_name'];
 $message = $output['message']['text'];
 
-/**
- * Emoji для лучшего визуального оформления.
- */
+
 $emoji = array(
   'preload' => json_decode('"\uD83D\uDE03"'), // Улыбочка.
   'weather' => array(
