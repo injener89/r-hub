@@ -35,7 +35,7 @@ if(isset($_GET['respons']) && $_GET['respons'] != "")
     if(isset($output['message']['chat']['id'])){
         $param = send_post($res->url,$telegram);
         $telegramResult = sendMessage($res->bot_token,$param);
-        if($res->return_telegram_is == 1){
+        if((int)$res->return_telegram_is == 1){
             send_post($res->return_telegram,$telegramResult);
         }
     }   
