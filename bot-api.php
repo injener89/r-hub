@@ -95,10 +95,12 @@ if(isset($_GET['respons']) && $_GET['respons'] != "")
         if((int)$res->return_telegram_is == 1){
             send_post($res->return_telegram,$telegramResult);
         }
-    }    
+    }   
+    exit;
 }
 if(isset($_GET['query']) && $_GET['query'] != "")
-{
+{ 
+    
     $telegram = file_get_contents('php://input');
     $output = json_decode($telegram, TRUE);
     
@@ -112,7 +114,8 @@ if(isset($_GET['query']) && $_GET['query'] != "")
         if((int)$res->return_telegram_is == 1){
             send_post($res->return_telegram,$telegramResult);
         }
-    }    
+    }
+    exit;
 }
 
 echo "Bad request!";
