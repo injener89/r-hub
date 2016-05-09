@@ -36,12 +36,11 @@ function send_post($url,$data = 0){
 
 if(isset($_GET['respons']) && $_GET['respons'] != "")
 {
-
     $url = "http://www.tt.uz/bots/".$_GET['respons'];
-   $result = file_get_contents($url);
+    $result = file_get_contents($url);
 
-
-  var_dump($result);
+//bots_my
+  var_dump(json_decode($result));
 }
 
 
