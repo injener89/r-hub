@@ -102,8 +102,9 @@ if(isset($_GET['query']) && $_GET['query'] != "")
 { 
     
     $telegram = file_get_contents('php://input');
-    $output = json_decode($telegram, TRUE);
+   
     
+    var_dump($telegram);
     $url = "http://www.tt.uz/bots/".$_GET['query'];
     $result = file_get_contents($url);
     $res = json_decode($result);
@@ -115,6 +116,7 @@ if(isset($_GET['query']) && $_GET['query'] != "")
             send_post($res->return_telegram,$telegramResult);
         }
     }
+    
     exit;
 }
 
