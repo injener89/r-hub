@@ -13,7 +13,32 @@ $update = file_get_contents($url."/sendMessage?chat_id=".$chatId."&text=Maxalchi
  */
 if(isset($_GET['test']))
 {
+    // Соединяемся, выбираем базу данных
+    $link = mysql_connect('50.87.248.158', 'ttuz_bots', 'ukF(kipy$w8F')
+        or die('Не удалось соединиться: ' . mysql_error());
+    echo 'Соединение успешно установлено';
+    mysql_select_db('my_database') or die('Не удалось выбрать базу данных');
 
+    // Выполняем SQL-запрос
+    $query = 'SELECT * FROM core_bots';
+    $result = mysql_query($query) or die('Запрос не удался: ' . mysql_error());
+
+    // Выводим результаты в html
+    echo "<table>\n";
+    while ($line = mysql_fetch_array($result, MYSQL_ASSOC)) {
+        echo "\t<tr>\n";
+        foreach ($line as $col_value) {
+            echo "\t\t<td>$col_value</td>\n";
+        }
+        echo "\t</tr>\n";
+    }
+    echo "</table>\n";
+
+    // Освобождаем память от результата
+    mysql_free_result($result);
+
+    // Закрываем соединение
+    mysql_close($link);
 
 }
 $access_token = '187767986:AAFLK_h8SMMG1mH8cDS64xfE5Lb6LRyo2vU';
