@@ -23,15 +23,15 @@ function send_post($url,$data){
     curl_close ($ch);
     return $data;
 }
-$telegram = file_get_contents('php://input');
-$output = json_decode($telegram, TRUE);
+
 if(isset($_GET['respons']) && $_GET['respons'] != "")
 {
+    $telegram = file_get_contents('php://input');
+    $output = json_decode($telegram, TRUE);
+    
     $url = "http://www.tt.uz/bots/".$_GET['respons'];
     $result = file_get_contents($url);
     $res = json_decode($result);
-    
-    var_dump($res);
     if(isset($output['message']['chat']['id'])){
         $param = send_post('"'.$res->url.'"',$telegram);
         sendMessage($res->bot_token,$param);
