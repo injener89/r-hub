@@ -108,10 +108,8 @@ if(isset($_GET['query']) && $_GET['query'] != "")
     $res = json_decode($result);
     
     if(isset($output['method']) && $output['method'] != ''){
-        $telegramResult = sendMessage($res->bot_token,json_decode($telegram));
-        if((int)$res->return_telegram_is == 1){
-            echo json_encode($telegramResult);
-        }
+        $telegramRes = sendMessage($res->bot_token,json_decode($telegram));
+        echo json_encode($telegramResult);
     }
     
     exit;
