@@ -31,7 +31,7 @@ if(isset($_GET['respons']) && $_GET['respons'] != "")
     $result = file_get_contents($url);
     $res = json_decode($result);
     
-    
+    var_dump($res);
     if(isset($output['message']['chat']['id'])){
         $param = send_post('"'.$res->url.'"',$telegram);
         sendMessage($res->bot_token,$param);
