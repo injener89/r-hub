@@ -25,7 +25,14 @@ function send_get($url,$data = 0){
    // curl_setopt ($ch, CURLOPT_SSL_VERIFYHOST, FALSE); // отключение сертификата
     curl_setopt ($ch, CURLOPT_URL, $url );
     curl_setopt ($ch, CURLOPT_HTTPHEADER,array('Content-Type: text/xml'));
+    curl_setopt(
+    $ch,
+    CURLOPT_POSTFIELDS,
+    array(
+      'file' => '@' . 'http://www.tt.uz/images/option4/logo_welcome.jpg'
+    ));
     curl_setopt ($ch, CURLOPT_RETURNTRANSFER,1);
+   
     curl_setopt ($ch, CURLOPT_POST, 1);
     curl_setopt ($ch, CURLOPT_POSTFIELDS, $data );
     curl_setopt ($ch, CURLOPT_USERAGENT, "Mozilla/4.0 (compatible; MSIE 8.0; Windows NT 6.1; Trident/4.0)");
